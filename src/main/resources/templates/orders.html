@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - Virtualthreads</title>
-    <link rel="stylesheet" th:href="@{/css/profile.css}">
+    <title>Orders - Virtualthreads</title>
+    <link rel="stylesheet" th:href="@{/css/orders.css}">
 </head>
 <body>
 
 <nav class="navbar">
-    <a th:href="@{/home}" class="logo">Virtualthreads</a>
+    <a th:href="@{/ui/home}" class="logo">Virtualthreads</a>
 
     <div class="nav-links">
         <a th:href="@{/ui/home}" class="nav-link">Home</a>
         <a th:href="@{/ui/orders}" class="nav-link active">Orders</a>
         <a th:href="@{/ui/profile}" class="nav-link">Profile</a>
         <a th:href="@{/ui/cart}" class="cart-link">Cart</a>
-
         <form th:action="@{/logout}" method="post" class="logout-form">
             <button type="submit" class="logout-btn">Logout</button>
         </form>
@@ -24,17 +23,28 @@
 </nav>
 
 <main class="page">
+    <section class="page-header">
+        <h1>Orders</h1>
+        <p>View your previous and current orders here.</p>
+    </section>
 
-    <section class="page-header-soon">
-        <div>
-            <span class="section-label-soon">Coming soon!</span>
+    <section class="coming-soon-card">
+        <div class="orders-icon">
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path d="M14 18h36v34H14z"/>
+                <path d="M21 18v-5h22v5"/>
+                <path d="M22 28h20M22 37h20M22 46h12"/>
+            </svg>
         </div>
+
+        <h2>Coming soon</h2>
+        <p>Order history and order tracking will be available here soon.</p>
+
+        <a th:href="@{/ui/home}" class="home-btn">Continue shopping</a>
     </section>
 </main>
 
-<footer>
-    © 2026 Virtualthreads · Simple. Seamless. Shopping.
-</footer>
+<footer>© 2026 Virtualthreads · Simple. Seamless. Shopping.</footer>
 
 </body>
 </html>
