@@ -1,18 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Virtualthreads</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
 <body>
+<nav class="navbar">
+    <a th:href="@{/home}" class="logo">Virtualthreads</a>
+    <div class="nav-links">
+        <a th:href="@{/home}" class="nav-link active">Home</a>
+        <a th:href="@{/orders}" class="nav-link">Orders</a>
+        <a th:href="@{/profile}" class="nav-link">Profile</a>
+        <a th:href="@{/cart}" class="cart-link">Cart <span class="cart-count" th:text="${cartCount}">0</span></a>
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+</nav>
 
-<h1>Welcome!</h1>
+<main class="page">
+    <section class="intro">
+        <span class="eyebrow">VIRTUALTHREADS STORE</span>
+        <h1>Everything you need,<br>in one place.</h1>
+        <p>Explore our collections, discover products you like, and enjoy a simple shopping experience.</p>
+    </section>
 
-<p>You have successfully logged in.</p>
+    <section class="section">
+        <div class="section-heading">
+            <div>
+                <span class="section-label">SHOP BY CATEGORY</span>
+                <h2>What are you looking for?</h2>
+            </div>
+        </div>
 
-<form action="/logout" method="post">
-    <button type="submit">Logout</button>
-</form>
+        <div class="category-grid">
+            <a th:each="category : ${categories}"
+               th:href="@{/products(categoryId=${category.id})}"
+               class="category-card">
 
+                <div class="category-icon">
+                    <svg th:if="${category.icon == 'fashion'}" viewBox="0 0 64 64">
+                        <path d="M24 11l8 7 8-7 13 9-7 12-6-4v25H24V28l-6 4-7-12 13-9z"/>
+                        <path d="M24 11c1 7 15 7 16 0"/>
+                    </svg>
+                    <svg th:if="${category.icon == 'electronics'}" viewBox="0 0 64 64">
+                        <rect x="10" y="14" width="44" height="30" rx="4"/>
+                        <path d="M24 52h16M32 44v8"/>
+                    </svg>
+                    <svg th:if="${category.icon == 'home'}" viewBox="0 0 64 64">
+                        <path d="M9 30L32 11l23 19"/>
+                        <path d="M15 27v27h34V27M26 54V38h12v16"/>
+                    </svg>
+                    <svg th:if="${category.icon == 'beauty'}" viewBox="0 0 64 64">
+                        <path d="M25 12h14M28 12v12l-10 27h28L36 24V12"/>
+                        <path d="M23 42h18"/>
+                    </svg>
+                    <svg th:if="${category.icon == 'sports'}" viewBox="0 0 64 64">
+                        <circle cx="32" cy="32" r="21"/>
+                        <path d="M18 18c9 6 19 8 29 6M15 39c10-3 23 0 34 8M29 11c2 10 0 19-6 29"/>
+                    </svg>
+                    <svg th:if="${category.icon == 'grocery'}" viewBox="0 0 64 64">
+                        <path d="M14 23h36l-4 29H18z"/>
+                        <path d="M24 23c0-8 3-12 8-12s8 4 8 12"/>
+                    </svg>
+                </div>
+
+                <h3 th:text="${category.name}">Fashion</h3>
+                <p th:text="${category.description}">Clothing and accessories</p>
+                <span class="arrow">→</span>
+            </a>
+        </div>
+    </section>
+
+    <section class="products-section" th:if="${featuredProducts != null and !featuredProducts.isEmpty()}">
+        <div class="section-heading">
+            <div>
+                <span class="section-label">FEATURED</span>
+                <h2>Popular products</h2>
+            </div>
+            <a th:href="@{/products}" class="view-all">View all →</a>
+        </div>
+
+        <div class="product-grid">
+            <a th:each="product : ${featuredProducts}"
+               th:href="@{/products/{id}(id=${product.id})}"
+               class="product-card">
+                <div class="product-image">
+                    <img th:if="${product.imageUrl != null and !product.imageUrl.isEmpty()}"
+                         th:src="${product.imageUrl}" th:alt="${product.name}">
+                    <span th:unless="${product.imageUrl != null and !product.imageUrl.isEmpty()}">Product</span>
+                </div>
+                <div class="product-info">
+                    <h3 th:text="${product.name}">Product name</h3>
+                    <p th:text="${product.categoryName}">Category</p>
+                    <strong th:text="${product.price}">₹0.00</strong>
+                </div>
+            </a>
+        </div>
+    </section>
+</main>
+
+<footer>© 2026 Virtualthreads · Simple. Seamless. Shopping.</footer>
 </body>
 </html>
