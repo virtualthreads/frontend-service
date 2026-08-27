@@ -15,10 +15,7 @@
         <a th:href="@{/ui/home}" class="nav-link">Home</a>
         <a th:href="@{/ui/orders}" class="nav-link">Orders</a>
         <a th:href="@{/ui/profile}" class="nav-link active">Profile</a>
-        <a th:href="@{/ui/cart}" class="cart-link">
-            Cart
-            <span class="cart-count" th:text="${cartCount}">0</span>
-        </a>
+        <a th:href="@{/ui/cart}" class="cart-link">Cart</a>
 
         <form th:action="@{/logout}" method="post" class="logout-form">
             <button type="submit" class="logout-btn">Logout</button>

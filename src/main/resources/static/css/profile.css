@@ -106,6 +106,21 @@ body {
     color: #6b7280;
 }
 
+.page-header-soon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 0 42px;
+}
+
+.section-label-soon {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #6b7280;
+}
+
 .page-header h1 {
     color: #111827;
     font-size: 38px;
@@ -142,7 +157,7 @@ body {
 }
 
 .card-header {
-    padding: 25px 28px;
+    padding: 25px 18px;
     border-bottom: 1px solid #e5e7eb;
 }
 
@@ -244,7 +259,7 @@ footer {
     }
 
     .nav-links {
-        gap: 14px;
+        gap: 28px;
     }
 
     .nav-link {

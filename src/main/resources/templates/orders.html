@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Virtualthreads</title>
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
+</head>
+<body>
+
+<nav class="navbar">
+    <a th:href="@{/home}" class="logo">Virtualthreads</a>
+
+    <div class="nav-links">
+        <a th:href="@{/ui/home}" class="nav-link">Home</a>
+        <a th:href="@{/ui/orders}" class="nav-link active">Orders</a>
+        <a th:href="@{/ui/profile}" class="nav-link">Profile</a>
+        <a th:href="@{/ui/cart}" class="cart-link">Cart</a>
+
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+</nav>
+
+<main class="page">
+
+    <section class="page-header-soon">
+        <div>
+            <span class="section-label-soon">Coming soon!</span>
+        </div>
+    </section>
+</main>
+
+<footer>
+    © 2026 Virtualthreads · Simple. Seamless. Shopping.
+</footer>
+
+</body>
+</html>
