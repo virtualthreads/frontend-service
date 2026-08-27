@@ -19,6 +19,6 @@ public class HomeController {
 
     @GetMapping("/ui/profile")
     public String profile() {
-        return "homepage";
+        return "profile";
     }
 }

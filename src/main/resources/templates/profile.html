@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Virtualthreads</title>
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
+</head>
+<body>
+
+<nav class="navbar">
+    <a th:href="@{/home}" class="logo">Virtualthreads</a>
+
+    <div class="nav-links">
+        <a th:href="@{/ui/home}" class="nav-link">Home</a>
+        <a th:href="@{/ui/orders}" class="nav-link">Orders</a>
+        <a th:href="@{/ui/profile}" class="nav-link active">Profile</a>
+        <a th:href="@{/ui/cart}" class="cart-link">
+            Cart
+            <span class="cart-count" th:text="${cartCount}">0</span>
+        </a>
+
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+</nav>
+
+<main class="page">
+
+    <section class="page-header">
+        <div>
+            <span class="section-label">MY ACCOUNT</span>
+            <h1>Profile</h1>
+            <p>View your personal information and account details.</p>
+        </div>
+
+        <div class="profile-avatar">
+            JD
+        </div>
+    </section>
+
+    <section class="profile-card">
+
+        <div class="card-header">
+            <div>
+                <span class="section-label">PERSONAL INFORMATION</span>
+                <h2>Your details</h2>
+            </div>
+        </div>
+
+        <div class="details-grid">
+
+            <div class="detail">
+                <span class="detail-label">First name</span>
+                <span class="detail-value">John</span>
+            </div>
+
+            <div class="detail">
+                <span class="detail-label">Last name</span>
+                <span class="detail-value">Doe</span>
+            </div>
+
+            <div class="detail">
+                <span class="detail-label">Email</span>
+                <span class="detail-value">john.doe@example.com</span>
+            </div>
+
+            <div class="detail">
+                <span class="detail-label">Phone number</span>
+                <span class="detail-value">+91 98765 43210</span>
+            </div>
+
+            <div class="detail">
+                <span class="detail-label">Gender</span>
+                <span class="detail-value">Male</span>
+            </div>
+
+            <div class="detail">
+                <span class="detail-label">Date of birth</span>
+                <span class="detail-value">01 January 1995</span>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Only ADMIN and SUPPORT users see their account type. -->
+    <section class="account-card">
+
+        <div class="account-icon">
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path d="M32 8l21 8v15c0 13-8 21-21 25C19 52 11 44 11 31V16l21-8z"/>
+                <path d="M23 32l6 6 12-13"/>
+            </svg>
+        </div>
+
+        <div class="account-content">
+            <span class="section-label">ACCOUNT TYPE</span>
+            <h2>ADMIN</h2>
+            <p>
+                This account has elevated access based on its assigned role.
+            </p>
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    © 2026 Virtualthreads · Simple. Seamless. Shopping.
+</footer>
+
+</body>
+</html>
