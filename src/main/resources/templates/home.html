@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Virtualthreads</title>
 
     <style>
@@ -20,7 +19,6 @@
             min-height: 100vh;
         }
 
-        /* Navigation Bar */
         nav {
             height: 70px;
             background: white;
@@ -38,6 +36,204 @@
             text-decoration: none;
         }
 
+        .nav-label {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 30px 60px;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            align-items: center;
+            gap: 70px;
+            min-height: 430px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #4b5563;
+            background: #eef0f3;
+            padding: 7px 12px;
+            border-radius: 999px;
+            margin-bottom: 20px;
+        }
+
+        .welcome h1 {
+            font-size: 52px;
+            line-height: 1.08;
+            font-weight: 600;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+            color: #111827;
+        }
+
+        .welcome p {
+            max-width: 570px;
+            font-size: 18px;
+            color: #6b7280;
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+
+        .hero-note {
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        .visual {
+            min-height: 330px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            padding: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 35px rgba(17, 24, 39, 0.06);
+        }
+
+        .store-card {
+            width: 100%;
+            height: 100%;
+            min-height: 285px;
+            border-radius: 12px;
+            background: #f1f3f5;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .store-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .store-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .cart {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: white;
+            display: grid;
+            place-items: center;
+            font-size: 15px;
+        }
+
+        .product-preview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .product {
+            height: 145px;
+            border-radius: 9px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 10px;
+            font-size: 11px;
+            color: #6b7280;
+            text-align: center;
+        }
+
+        .product:first-child {
+            background: #e7e9ec;
+        }
+
+        .product:nth-child(2) {
+            background: #dde1e5;
+        }
+
+        .product:nth-child(3) {
+            background: #eceeef;
+        }
+
+        .product-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.72);
+            display: grid;
+            place-items: center;
+        }
+
+        .product-icon svg {
+            width: 37px;
+            height: 37px;
+            fill: none;
+            stroke: #374151;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .product span {
+            font-weight: 600;
+            color: #4b5563;
+        }
+
+        .features {
+            margin-top: 75px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .feature {
+            padding: 28px 24px;
+        }
+
+        .feature + .feature {
+            border-left: 1px solid #e5e7eb;
+        }
+
+        .feature-number {
+            font-size: 13px;
+            color: #9ca3af;
+            margin-bottom: 13px;
+        }
+
+        .feature h2 {
+            font-size: 17px;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 9px;
+        }
+
+        .feature p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #6b7280;
+        }
+
+        .footer {
+            text-align: center;
+            padding-top: 45px;
+            font-size: 13px;
+            color: #9ca3af;
+        }
+
         .login-btn {
             text-decoration: none;
             background: #111827;
@@ -52,45 +248,59 @@
             background: #374151;
         }
 
-        /* Main Content */
-        main {
-            min-height: calc(100vh - 70px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .welcome {
-            max-width: 600px;
-        }
-
-        .welcome h1 {
-            font-size: 48px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: #111827;
-        }
-
-        .welcome p {
-            font-size: 18px;
-            color: #6b7280;
-            line-height: 1.6;
-        }
-
-        @media (max-width: 600px) {
-
+        @media (max-width: 800px) {
             nav {
                 padding: 0 20px;
             }
 
+            main {
+                padding: 55px 20px 45px;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
             .welcome h1 {
-                font-size: 36px;
+                font-size: 40px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .feature + .feature {
+                border-left: 0;
+                border-top: 1px solid #e5e7eb;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome h1 {
+                font-size: 34px;
             }
 
             .welcome p {
                 font-size: 16px;
+            }
+
+            .product-preview {
+                gap: 7px;
+            }
+
+            .product {
+                height: 125px;
+            }
+
+            .product-icon {
+                width: 48px;
+                height: 48px;
+            }
+
+            .product-icon svg {
+                width: 31px;
+                height: 31px;
             }
         }
     </style>
@@ -100,16 +310,87 @@
 
 <nav>
     <a href="/" class="logo">Virtualthreads</a>
+    <span class="nav-label">Simple. Seamless. Shopping.</span>
     <a href="/ui/login" class="login-btn">Login</a>
 </nav>
 
 <main>
-    <div class="welcome">
-        <h1>Welcome to Virtualthreads</h1>
+    <section class="hero">
+        <div class="welcome">
+            <span class="eyebrow">YOUR ONLINE STORE</span>
+            <h1>Welcome to Virtualthreads</h1>
+            <p>
+                Discover a simple and seamless shopping experience built to
+                make browsing products feel effortless. Explore, choose what
+                you like, and enjoy a straightforward way to shop online.
+            </p>
+            <div class="hero-note">Everything you need. Nothing complicated.</div>
+        </div>
 
-        <p>
-            A simple and seamless shopping experience.
-        </p>
+        <div class="visual" aria-label="Store preview">
+            <div class="store-card">
+                <div class="store-top">
+                    <span class="store-title">Explore products</span>
+                    <span class="cart">🛒</span>
+                </div>
+
+                <div class="product-preview">
+                    <div class="product">
+                        <div class="product-icon" aria-hidden="true">
+                            <svg viewBox="0 0 64 64">
+                                <path d="M10 39c8-2 15-7 20-17l6 4c4 3 9 6 18 8l-3 9H14c-3 0-5-2-4-4z"/>
+                                <path d="M30 22l6 4"/>
+                            </svg>
+                        </div>
+                        <span>Sneakers</span>
+                    </div>
+                    <div class="product">
+                        <div class="product-icon" aria-hidden="true">
+                            <svg viewBox="0 0 64 64">
+                                <path d="M19 27c0-5 4-9 9-9h8c5 0 9 4 9 9v15c0 5-4 9-9 9h-8c-5 0-9-4-9-9z"/>
+                                <path d="M19 31H13v10h6M45 31h6v10h-6"/>
+                                <path d="M29 18v-5h6v5"/>
+                            </svg>
+                        </div>
+                        <span>Headphones</span>
+                    </div>
+                    <div class="product">
+                        <div class="product-icon" aria-hidden="true">
+                            <svg viewBox="0 0 64 64">
+                                <rect x="18" y="18" width="28" height="28" rx="7"/>
+                                <path d="M25 12v8M39 12v8M25 44v8M39 44v8"/>
+                                <path d="M25 32h14"/>
+                            </svg>
+                        </div>
+                        <span>Smart Watch</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature">
+            <div class="feature-number">01</div>
+            <h2>Easy to explore</h2>
+            <p>Browse products through a clean and focused shopping interface.</p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-number">02</div>
+            <h2>Simple experience</h2>
+            <p>Designed around the essentials, without unnecessary complexity.</p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-number">03</div>
+            <h2>Built for shopping</h2>
+            <p>A straightforward foundation for discovering and purchasing products.</p>
+        </div>
+    </section>
+
+    <div class="footer">
+        © 2026 Virtualthreads · A simple ecommerce experience
     </div>
 </main>
 
