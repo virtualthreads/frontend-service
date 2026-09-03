@@ -1,107 +1,322 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Virtualthreads</title>
-    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <title>Virtualthreads - Next-Gen Online Shopping</title>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-<nav class="navbar">
-    <a th:href="@{/ui/home}" class="logo">Virtualthreads</a>
-    <div class="nav-links">
-        <a th:href="@{/ui/home}" class="nav-link active">Home</a>
-        <a th:href="@{/ui/orders}" class="nav-link">Orders</a>
-        <a th:href="@{/ui/profile}" class="nav-link">Profile</a>
-        <a th:href="@{/ui/cart}" class="cart-link">Cart</a>
-        <form th:action="@{/logout}" method="post" class="logout-form">
-            <button type="submit" class="logout-btn">Logout</button>
-        </form>
+
+<!-- Navigation Bar -->
+<nav class="app-navbar" id="appNavbar">
+    <div class="container navbar-inner">
+        <a href="/" class="nav-brand">
+            <div class="brand-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                </svg>
+            </div>
+            <span>Virtualthreads</span>
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link active">Home</a></li>
+            <li><a href="/ui/orders" class="nav-link">Orders</a></li>
+            <li class="nav-auth-only" style="display: none;"><a href="/ui/profile" class="nav-link">Profile</a></li>
+            <li class="nav-auth-only" style="display: none;">
+                <a href="/ui/cart" class="nav-link">
+                    Cart <span id="navCartBadge" class="cart-badge" style="display: none;">0</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="nav-actions">
+            <!-- Guest Actions -->
+            <div class="nav-guest-only" style="display: flex; gap: 10px; align-items: center;">
+                <button type="button" class="btn btn-outline btn-sm" onclick="openSignupModal()">Sign Up</button>
+                <button type="button" class="btn btn-primary btn-sm" onclick="openLoginModal()">Login</button>
+            </div>
+
+            <!-- Logged-in Actions -->
+            <div class="nav-auth-only" style="display: none; gap: 12px; align-items: center;">
+                <a href="/ui/profile" class="user-pill" style="text-decoration: none;">
+                    <span id="navUserAvatar" class="user-avatar-small">U</span>
+                    <span id="navUserEmail" class="user-email-text">User</span>
+                </a>
+                <button type="button" class="btn btn-danger-outline btn-sm" onclick="logout()">Logout</button>
+            </div>
+
+            <button type="button" class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation menu">
+                <svg viewBox="0 0 24 24">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
     </div>
 </nav>
 
-<main class="page">
-    <section class="intro">
-        <span class="eyebrow">VIRTUALTHREADS STORE</span>
-        <h1>Everything you need,<br>in one place.</h1>
-        <p>Explore our collections, discover products you like, and enjoy a simple shopping experience.</p>
-    </section>
+<!-- Main Page Content -->
+<main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <span class="hero-badge">✨ Simple. Seamless. Shopping.</span>
+                <h1 class="hero-title">
+                    Discover Quality,<br>
+                    <span>Built For Everyday.</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Explore our curated collection of contemporary apparel, cutting-edge audio, smart wearables, and home lifestyle essentials crafted for modern living.
+                </p>
+                <div class="hero-actions">
+                    <a href="#categoriesSection" class="btn btn-primary btn-lg">Explore Categories</a>
+                    <a href="#featuredProductsSection" class="btn btn-outline btn-lg">Featured Products</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat-item">
+                        <strong>10,000+</strong>
+                        <span>Happy Customers</span>
+                    </div>
+                    <div class="hero-stat-item">
+                        <strong>100%</strong>
+                        <span>Authentic Brands</span>
+                    </div>
+                    <div class="hero-stat-item">
+                        <strong>24/7</strong>
+                        <span>Fast Support</span>
+                    </div>
+                </div>
+            </div>
 
-    <section class="section">
-        <div class="section-heading">
-            <div>
-                <span class="section-label">SHOP BY CATEGORY</span>
-                <h2>What are you looking for?</h2>
+            <div class="hero-visual" aria-label="Featured Collection Visual">
+                <div class="hero-visual-card">
+                    <div class="hero-visual-header">
+                        <span class="hero-card-tag">TRENDING TODAY</span>
+                        <span style="font-size: 13px; font-weight: 700; color: #64748b;">Instant Dispatch</span>
+                    </div>
+                    <div class="hero-preview-grid">
+                        <div class="hero-preview-item">
+                            <div class="preview-icon-box">
+                                <svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+                            </div>
+                            <h4>SonicPro</h4>
+                            <p>Hi-Fi Audio</p>
+                        </div>
+                        <div class="hero-preview-item">
+                            <div class="preview-icon-box">
+                                <svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="3"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M12 9v3l2 2"/></svg>
+                            </div>
+                            <h4>PulseFit</h4>
+                            <p>Smart Watch</p>
+                        </div>
+                        <div class="hero-preview-item">
+                            <div class="preview-icon-box">
+                                <svg viewBox="0 0 24 24"><path d="M2 18h20v2H2zM4 14l2-6 8 2 6 4H4z"/></svg>
+                            </div>
+                            <h4>AeroGlide</h4>
+                            <p>Sneakers</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
 
-        <div class="category-grid">
-            <a th:each="category : ${categories}"
-               th:href="@{/products(categoryId=${category.id})}"
-               class="category-card">
-
-                <div class="category-icon">
-                    <svg th:if="${category.icon == 'fashion'}" viewBox="0 0 64 64">
-                        <path d="M24 11l8 7 8-7 13 9-7 12-6-4v25H24V28l-6 4-7-12 13-9z"/>
-                        <path d="M24 11c1 7 15 7 16 0"/>
-                    </svg>
-                    <svg th:if="${category.icon == 'electronics'}" viewBox="0 0 64 64">
-                        <rect x="10" y="14" width="44" height="30" rx="4"/>
-                        <path d="M24 52h16M32 44v8"/>
-                    </svg>
-                    <svg th:if="${category.icon == 'home'}" viewBox="0 0 64 64">
-                        <path d="M9 30L32 11l23 19"/>
-                        <path d="M15 27v27h34V27M26 54V38h12v16"/>
-                    </svg>
-                    <svg th:if="${category.icon == 'beauty'}" viewBox="0 0 64 64">
-                        <path d="M25 12h14M28 12v12l-10 27h28L36 24V12"/>
-                        <path d="M23 42h18"/>
-                    </svg>
-                    <svg th:if="${category.icon == 'sports'}" viewBox="0 0 64 64">
-                        <circle cx="32" cy="32" r="21"/>
-                        <path d="M18 18c9 6 19 8 29 6M15 39c10-3 23 0 34 8M29 11c2 10 0 19-6 29"/>
-                    </svg>
-                    <svg th:if="${category.icon == 'grocery'}" viewBox="0 0 64 64">
-                        <path d="M14 23h36l-4 29H18z"/>
-                        <path d="M24 23c0-8 3-12 8-12s8 4 8 12"/>
-                    </svg>
+    <!-- Categories Section -->
+    <section class="section" id="categoriesSection">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <span class="section-label">CATEGORIES</span>
+                    <h2 class="section-title">Shop by Category</h2>
+                    <p class="section-desc">Handpicked departments designed for effortless discovery</p>
                 </div>
-
-                <h3 th:text="${category.name}">Fashion</h3>
-                <p th:text="${category.description}">Clothing and accessories</p>
-                <span class="arrow">→</span>
-            </a>
+            </div>
+            <div class="categories-grid" id="categoriesGrid">
+                <!-- Populated dynamically via home-page.js -->
+            </div>
         </div>
     </section>
 
-    <section class="products-section" th:if="${featuredProducts != null and !featuredProducts.isEmpty()}">
-        <div class="section-heading">
-            <div>
-                <span class="section-label">FEATURED</span>
-                <h2>Popular products</h2>
+    <!-- Featured Products Section -->
+    <section class="section" id="featuredProductsSection" style="background: #ffffff; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <span class="section-label">CURATED FOR YOU</span>
+                    <h2 class="section-title">Featured Products</h2>
+                    <p class="section-desc">High-demand essentials with rave customer reviews</p>
+                </div>
             </div>
-            <a th:href="@{/products}" class="view-all">View all →</a>
+            <div class="products-grid" id="featuredProductsGrid">
+                <!-- Populated dynamically via home-page.js -->
+            </div>
         </div>
+    </section>
 
-        <div class="product-grid">
-            <a th:each="product : ${featuredProducts}"
-               th:href="@{/products/{id}(id=${product.id})}"
-               class="product-card">
-                <div class="product-image">
-                    <img th:if="${product.imageUrl != null and !product.imageUrl.isEmpty()}"
-                         th:src="${product.imageUrl}" th:alt="${product.name}">
-                    <span th:unless="${product.imageUrl != null and !product.imageUrl.isEmpty()}">Product</span>
+    <!-- Value Propositions Strip -->
+    <section class="container">
+        <div class="features-strip">
+            <div class="feature-box">
+                <div class="feature-box-icon">
+                    <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                 </div>
-                <div class="product-info">
-                    <h3 th:text="${product.name}">Product name</h3>
-                    <p th:text="${product.categoryName}">Category</p>
-                    <strong th:text="${product.price}">₹0.00</strong>
+                <div>
+                    <h4>Fast & Reliable Shipping</h4>
+                    <p>Express doorstep delivery across all standard orders.</p>
                 </div>
-            </a>
+            </div>
+            <div class="feature-box">
+                <div class="feature-box-icon">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                </div>
+                <div>
+                    <h4>Secure Checkout</h4>
+                    <p>Protected by end-to-end encrypted microservice security.</p>
+                </div>
+            </div>
+            <div class="feature-box">
+                <div class="feature-box-icon">
+                    <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                </div>
+                <div>
+                    <h4>Hassle-Free Returns</h4>
+                    <p>14-day replacement guarantee if you're not completely satisfied.</p>
+                </div>
+            </div>
         </div>
     </section>
 </main>
 
-<footer>© 2026 Virtualthreads · Simple. Seamless. Shopping.</footer>
+<!-- Login Modal -->
+<div class="modal-overlay" id="loginModal">
+    <div class="modal-dialog">
+        <div class="modal-header">
+            <div class="modal-header-text">
+                <h3>Welcome Back</h3>
+                <p>Sign in with your email address and password</p>
+            </div>
+            <button type="button" class="modal-close-btn" onclick="closeLoginModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-error" id="loginError" style="display: none;"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="loginEmail">Email Address <span class="required">*</span></label>
+                    <input type="email" id="loginEmail" name="email" class="form-control" placeholder="name@example.com" required autocomplete="email" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="loginPassword">Password <span class="required">*</span></label>
+                    <input type="password" id="loginPassword" name="password" class="form-control" placeholder="Enter your password" required autocomplete="current-password" />
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Sign In</button>
+            </form>
+        </div>
+        <div class="modal-footer">
+            Don't have an account? <a href="javascript:void(0)" onclick="switchToSignup()">Sign Up</a>
+        </div>
+    </div>
+</div>
+
+<!-- Sign Up Modal -->
+<div class="modal-overlay" id="signupModal">
+    <div class="modal-dialog wide">
+        <div class="modal-header">
+            <div class="modal-header-text">
+                <h3>Create an Account</h3>
+                <p>Register with Virtualthreads to unlock personalized shopping and cart access</p>
+            </div>
+            <button type="button" class="modal-close-btn" onclick="closeSignupModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-error" id="signupError" style="display: none;"></div>
+            <form id="signupForm">
+                <div class="profile-form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="signupFirstName">First Name <span class="required">*</span></label>
+                        <input type="text" id="signupFirstName" name="firstName" class="form-control" placeholder="e.g. John" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signupLastName">Last Name</label>
+                        <input type="text" id="signupLastName" name="lastName" class="form-control" placeholder="e.g. Doe" />
+                    </div>
+                </div>
+
+                <div class="profile-form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="signupEmail">Email Address <span class="required">*</span></label>
+                        <input type="email" id="signupEmail" name="email" class="form-control" placeholder="john.doe@example.com" required autocomplete="email" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signupPhone">Phone Number</label>
+                        <input type="tel" id="signupPhone" name="phoneNumber" class="form-control" placeholder="+91 98765 43210" />
+                    </div>
+                </div>
+
+                <div class="profile-form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="signupGender">Gender <span class="required">*</span></label>
+                        <select id="signupGender" name="gender" class="form-control" required>
+                            <option value="">Select Gender</option>
+                            <option value="MALE">Male</option>
+                            <option value="FEMALE">Female</option>
+                            <option value="OTHER">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signupDob">Date of Birth <span class="required">*</span></label>
+                        <input type="date" id="signupDob" name="dateOfBirth" class="form-control" required />
+                    </div>
+                </div>
+
+                <div class="profile-form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="signupPassword">Password <span class="required">*</span></label>
+                        <input type="password" id="signupPassword" name="password" class="form-control" placeholder="Min. 8 characters" minlength="8" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signupConfirmPassword">Confirm Password <span class="required">*</span></label>
+                        <input type="password" id="signupConfirmPassword" name="confirmPassword" class="form-control" placeholder="Re-enter password" minlength="8" required />
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Create Account</button>
+            </form>
+        </div>
+        <div class="modal-footer">
+            Already have an account? <a href="javascript:void(0)" onclick="switchToLogin()">Log In</a>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="app-footer">
+    <div class="container footer-inner">
+        <div class="footer-brand">
+            &copy; 2026 Virtualthreads &middot; Next-Generation Ecommerce Experience
+        </div>
+        <ul class="footer-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/ui/orders">Orders</a></li>
+            <li><a href="/ui/profile">Profile</a></li>
+            <li><a href="/ui/cart">Cart</a></li>
+        </ul>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="/scripts/auth.js"></script>
+<script src="/scripts/cart.js"></script>
+<script src="/scripts/navbar.js"></script>
+<script src="/scripts/login.js"></script>
+<script src="/scripts/signup.js"></script>
+<script src="/scripts/home-page.js"></script>
+
 </body>
 </html>

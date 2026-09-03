@@ -1,50 +1,212 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orders - Virtualthreads</title>
-    <link rel="stylesheet" th:href="@{/css/orders.css}">
+    <title>My Orders - Virtualthreads</title>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
 
-<nav class="navbar">
-    <a th:href="@{/ui/home}" class="logo">Virtualthreads</a>
+<!-- Navigation Bar -->
+<nav class="app-navbar" id="appNavbar">
+    <div class="container navbar-inner">
+        <a href="/" class="nav-brand">
+            <div class="brand-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                </svg>
+            </div>
+            <span>Virtualthreads</span>
+        </a>
 
-    <div class="nav-links">
-        <a th:href="@{/ui/home}" class="nav-link">Home</a>
-        <a th:href="@{/ui/orders}" class="nav-link active">Orders</a>
-        <a th:href="@{/ui/profile}" class="nav-link">Profile</a>
-        <a th:href="@{/ui/cart}" class="cart-link">Cart</a>
-        <form th:action="@{/logout}" method="post" class="logout-form">
-            <button type="submit" class="logout-btn">Logout</button>
-        </form>
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/ui/orders" class="nav-link active">Orders</a></li>
+            <li class="nav-auth-only" style="display: none;"><a href="/ui/profile" class="nav-link">Profile</a></li>
+            <li class="nav-auth-only" style="display: none;">
+                <a href="/ui/cart" class="nav-link">
+                    Cart <span id="navCartBadge" class="cart-badge" style="display: none;">0</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="nav-actions">
+            <!-- Guest Actions -->
+            <div class="nav-guest-only" style="display: flex; gap: 10px; align-items: center;">
+                <button type="button" class="btn btn-outline btn-sm" onclick="openSignupModal()">Sign Up</button>
+                <button type="button" class="btn btn-primary btn-sm" onclick="openLoginModal()">Login</button>
+            </div>
+
+            <!-- Logged-in Actions -->
+            <div class="nav-auth-only" style="display: none; gap: 12px; align-items: center;">
+                <a href="/ui/profile" class="user-pill" style="text-decoration: none;">
+                    <span id="navUserAvatar" class="user-avatar-small">U</span>
+                    <span id="navUserEmail" class="user-email-text">User</span>
+                </a>
+                <button type="button" class="btn btn-danger-outline btn-sm" onclick="logout()">Logout</button>
+            </div>
+
+            <button type="button" class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation menu">
+                <svg viewBox="0 0 24 24">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
     </div>
 </nav>
 
-<main class="page">
-    <section class="page-header">
-        <h1>Orders</h1>
-        <p>View your previous and current orders here.</p>
-    </section>
+<!-- Page Content -->
+<main class="container" style="padding: 50px 24px 80px;">
+    <div style="margin-bottom: 36px;">
+        <span class="section-label">PURCHASE HISTORY</span>
+        <h1 class="section-title">Your Orders</h1>
+        <p class="section-desc">Track, view, and manage your recent orders and delivery statuses</p>
+    </div>
 
-    <section class="coming-soon-card">
-        <div class="orders-icon">
-            <svg viewBox="0 0 64 64" aria-hidden="true">
-                <path d="M14 18h36v34H14z"/>
-                <path d="M21 18v-5h22v5"/>
-                <path d="M22 28h20M22 37h20M22 46h12"/>
+    <!-- Empty / Coming Soon Card -->
+    <div class="cart-items-card" style="text-align: center; padding: 60px 24px;">
+        <div class="cart-empty-icon" style="background: #eef2ff; color: #4f46e5;">
+            <svg viewBox="0 0 24 24">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
             </svg>
         </div>
-
-        <h2>Coming soon</h2>
-        <p>Order history and order tracking will be available here soon.</p>
-
-        <a th:href="@{/ui/home}" class="home-btn">Continue shopping</a>
-    </section>
+        <h2 style="font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 8px;">No Recent Orders Found</h2>
+        <p style="color: #64748b; max-width: 480px; margin: 0 auto 28px; line-height: 1.6;">
+            You haven't placed any orders yet. Discover our premium collections and add your favorite products to your cart.
+        </p>
+        <a href="/" class="btn btn-primary btn-lg">Explore Store</a>
+    </div>
 </main>
 
-<footer>© 2026 Virtualthreads · Simple. Seamless. Shopping.</footer>
+<!-- Login Modal -->
+<div class="modal-overlay" id="loginModal">
+    <div class="modal-dialog">
+        <div class="modal-header">
+            <div class="modal-header-text">
+                <h3>Welcome Back</h3>
+                <p>Sign in with your email address and password</p>
+            </div>
+            <button type="button" class="modal-close-btn" onclick="closeLoginModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-error" id="loginError" style="display: none;"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="loginEmail">Email Address <span class="required">*</span></label>
+                    <input type="email" id="loginEmail" name="email" class="form-control" placeholder="name@example.com" required autocomplete="email" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="loginPassword">Password <span class="required">*</span></label>
+                    <input type="password" id="loginPassword" name="password" class="form-control" placeholder="Enter your password" required autocomplete="current-password" />
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Sign In</button>
+            </form>
+        </div>
+        <div class="modal-footer">
+            Don't have an account? <a href="javascript:void(0)" onclick="switchToSignup()">Sign Up</a>
+        </div>
+    </div>
+</div>
+
+<!-- Sign Up Modal -->
+<div class="modal-overlay" id="signupModal">
+    <div class="modal-dialog wide">
+        <div class="modal-header">
+            <div class="modal-header-text">
+                <h3>Create an Account</h3>
+                <p>Register with Virtualthreads to track your orders and checkout faster</p>
+            </div>
+            <button type="button" class="modal-close-btn" onclick="closeSignupModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-error" id="signupError" style="display: none;"></div>
+            <form id="signupForm">
+                <div class="profile-form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="signupFirstName">First Name <span class="required">*</span></label>
+                        <input type="text" id="signupFirstName" name="firstName" class="form-control" placeholder="e.g. John" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signupLastName">Last Name</label>
+                        <input type="text" id="signupLastName" name="lastName" class="form-control" placeholder="e.g. Doe" />
+                    </div>
+                </div>
+
+                <div class="profile-form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="signupEmail">Email Address <span class="required">*</span></label>
+                        <input type="email" id="signupEmail" name="email" class="form-control" placeholder="john.doe@example.com" required autocomplete="email" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signupPhone">Phone Number</label>
+                        <input type="tel" id="signupPhone" name="phoneNumber" class="form-control" placeholder="+91 98765 43210" />
+                    </div>
+                </div>
+
+                <div class="profile-form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="signupGender">Gender <span class="required">*</span></label>
+                        <select id="signupGender" name="gender" class="form-control" required>
+                            <option value="">Select Gender</option>
+                            <option value="MALE">Male</option>
+                            <option value="FEMALE">Female</option>
+                            <option value="OTHER">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signupDob">Date of Birth <span class="required">*</span></label>
+                        <input type="date" id="signupDob" name="dateOfBirth" class="form-control" required />
+                    </div>
+                </div>
+
+                <div class="profile-form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="signupPassword">Password <span class="required">*</span></label>
+                        <input type="password" id="signupPassword" name="password" class="form-control" placeholder="Min. 8 characters" minlength="8" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signupConfirmPassword">Confirm Password <span class="required">*</span></label>
+                        <input type="password" id="signupConfirmPassword" name="confirmPassword" class="form-control" placeholder="Re-enter password" minlength="8" required />
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Create Account</button>
+            </form>
+        </div>
+        <div class="modal-footer">
+            Already have an account? <a href="javascript:void(0)" onclick="switchToLogin()">Log In</a>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="app-footer">
+    <div class="container footer-inner">
+        <div class="footer-brand">
+            &copy; 2026 Virtualthreads &middot; Next-Generation Ecommerce Experience
+        </div>
+        <ul class="footer-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/ui/orders">Orders</a></li>
+            <li><a href="/ui/profile">Profile</a></li>
+            <li><a href="/ui/cart">Cart</a></li>
+        </ul>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="/scripts/auth.js"></script>
+<script src="/scripts/cart.js"></script>
+<script src="/scripts/navbar.js"></script>
+<script src="/scripts/login.js"></script>
+<script src="/scripts/signup.js"></script>
 
 </body>
 </html>

@@ -3,133 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Login - Virtualthreads</title>
-
+    <title>Sign In / Register - Virtualthreads</title>
+    <link rel="stylesheet" href="/css/main.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .auth-page-container {
+            max-width: 520px;
+            margin: 50px auto 80px;
+            padding: 0 20px;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f8f9fa;
-            color: #1f2937;
-            min-height: 100vh;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .login-container {
-            width: 100%;
-            max-width: 400px;
+        .auth-card {
             background: white;
-            padding: 40px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            padding: 36px 32px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
         }
 
-        .login-container h1 {
-            font-size: 28px;
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 8px;
-            color: #111827;
+        .auth-tabs {
+            display: flex;
+            background: #f1f5f9;
+            padding: 4px;
+            border-radius: 12px;
+            margin-bottom: 28px;
         }
 
-        .login-container .subtitle {
-            text-align: center;
-            color: #6b7280;
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: #374151;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 15px;
-            outline: none;
-        }
-
-        .form-group input:focus {
-            border-color: #111827;
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 12px;
+        .auth-tab-btn {
+            flex: 1;
+            padding: 10px;
             border: none;
-            border-radius: 6px;
-            background: #111827;
-            color: white;
-            font-size: 15px;
+            background: none;
+            font-size: 14px;
+            font-weight: 700;
+            color: #64748b;
+            border-radius: 9px;
             cursor: pointer;
-            margin-top: 5px;
+            transition: all 150ms ease;
         }
 
-        .login-btn:hover {
-            background: #374151;
+        .auth-tab-btn.active {
+            background: white;
+            color: #0f172a;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
         }
     </style>
 </head>
-
 <body>
 
-<div class="login-container">
+<!-- Navigation Bar -->
+<nav class="app-navbar" id="appNavbar">
+    <div class="container navbar-inner">
+        <a href="/" class="nav-brand">
+            <div class="brand-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                </svg>
+            </div>
+            <span>Virtualthreads</span>
+        </a>
 
-    <h1>Welcome Back</h1>
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/ui/orders" class="nav-link">Orders</a></li>
+            <li class="nav-auth-only" style="display: none;"><a href="/ui/profile" class="nav-link">Profile</a></li>
+            <li class="nav-auth-only" style="display: none;">
+                <a href="/ui/cart" class="nav-link">
+                    Cart <span id="navCartBadge" class="cart-badge" style="display: none;">0</span>
+                </a>
+            </li>
+        </ul>
 
-    <p class="subtitle">
-        Login to your Virtualthreads account
-    </p>
+        <div class="nav-actions">
+            <!-- Guest Actions -->
+            <div class="nav-guest-only" style="display: flex; gap: 10px; align-items: center;">
+                <button type="button" class="btn btn-outline btn-sm" onclick="showSignupTab()">Sign Up</button>
+                <button type="button" class="btn btn-primary btn-sm" onclick="showLoginTab()">Login</button>
+            </div>
 
-    <form action="/ui/login" method="post">
+            <!-- Logged-in Actions -->
+            <div class="nav-auth-only" style="display: none; gap: 12px; align-items: center;">
+                <a href="/ui/profile" class="user-pill" style="text-decoration: none;">
+                    <span id="navUserAvatar" class="user-avatar-small">U</span>
+                    <span id="navUserEmail" class="user-email-text">User</span>
+                </a>
+                <button type="button" class="btn btn-danger-outline btn-sm" onclick="logout()">Logout</button>
+            </div>
 
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    placeholder="Enter your username"
-                    required>
+            <button type="button" class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation menu">
+                <svg viewBox="0 0 24 24">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<main class="auth-page-container">
+    <div class="auth-card">
+        <div class="auth-tabs">
+            <button type="button" class="auth-tab-btn active" id="tabLoginBtn" onclick="showLoginTab()">Sign In</button>
+            <button type="button" class="auth-tab-btn" id="tabSignupBtn" onclick="showSignupTab()">Register</button>
         </div>
 
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Enter your password"
-                    required>
+        <!-- Login Pane -->
+        <div id="loginPane">
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 24px; font-weight: 800; color: #0f172a;">Welcome Back</h2>
+                <p style="font-size: 14px; color: #64748b; margin-top: 4px;">Sign in to your Virtualthreads account</p>
+            </div>
+
+            <div class="alert alert-error" id="pageLoginError" style="display: none;"></div>
+
+            <form id="pageLoginForm">
+                <div class="form-group">
+                    <label class="form-label" for="pageLoginEmail">Email Address <span class="required">*</span></label>
+                    <input type="email" id="pageLoginEmail" name="email" class="form-control" placeholder="name@example.com" required autocomplete="email" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="pageLoginPassword">Password <span class="required">*</span></label>
+                    <input type="password" id="pageLoginPassword" name="password" class="form-control" placeholder="Enter your password" required autocomplete="current-password" />
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 10px;">Sign In</button>
+            </form>
         </div>
 
-        <button type="submit" class="login-btn">
-            Login
-        </button>
+        <!-- Signup Pane -->
+        <div id="signupPane" style="display: none;">
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 24px; font-weight: 800; color: #0f172a;">Create Account</h2>
+                <p style="font-size: 14px; color: #64748b; margin-top: 4px;">Sign up with Virtualthreads for seamless shopping</p>
+            </div>
 
-    </form>
+            <div class="alert alert-error" id="pageSignupError" style="display: none;"></div>
 
-</div>
+            <form id="pageSignupForm">
+                <div class="profile-form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="pageSignupFirstName">First Name <span class="required">*</span></label>
+                        <input type="text" id="pageSignupFirstName" name="firstName" class="form-control" placeholder="e.g. John" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="pageSignupLastName">Last Name</label>
+                        <input type="text" id="pageSignupLastName" name="lastName" class="form-control" placeholder="e.g. Doe" />
+                    </div>
+                </div>
+
+                <div class="profile-form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="pageSignupEmail">Email Address <span class="required">*</span></label>
+                        <input type="email" id="pageSignupEmail" name="email" class="form-control" placeholder="john.doe@example.com" required autocomplete="email" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="pageSignupPhone">Phone Number</label>
+                        <input type="tel" id="pageSignupPhone" name="phoneNumber" class="form-control" placeholder="+91 98765 43210" />
+                    </div>
+                </div>
+
+                <div class="profile-form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="pageSignupGender">Gender <span class="required">*</span></label>
+                        <select id="pageSignupGender" name="gender" class="form-control" required>
+                            <option value="">Select Gender</option>
+                            <option value="MALE">Male</option>
+                            <option value="FEMALE">Female</option>
+                            <option value="OTHER">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="pageSignupDob">Date of Birth <span class="required">*</span></label>
+                        <input type="date" id="pageSignupDob" name="dateOfBirth" class="form-control" required />
+                    </div>
+                </div>
+
+                <div class="profile-form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="pageSignupPassword">Password <span class="required">*</span></label>
+                        <input type="password" id="pageSignupPassword" name="password" class="form-control" placeholder="Min. 8 characters" minlength="8" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="pageSignupConfirmPassword">Confirm Password <span class="required">*</span></label>
+                        <input type="password" id="pageSignupConfirmPassword" name="confirmPassword" class="form-control" placeholder="Re-enter password" minlength="8" required />
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 10px;">Create Account</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="app-footer">
+    <div class="container footer-inner">
+        <div class="footer-brand">
+            &copy; 2026 Virtualthreads &middot; Next-Generation Ecommerce Experience
+        </div>
+        <ul class="footer-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/ui/orders">Orders</a></li>
+            <li><a href="/ui/profile">Profile</a></li>
+            <li><a href="/ui/cart">Cart</a></li>
+        </ul>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="/scripts/auth.js"></script>
+<script src="/scripts/cart.js"></script>
+<script src="/scripts/navbar.js"></script>
+<script src="/scripts/login.js"></script>
+<script src="/scripts/signup.js"></script>
+
+<script>
+    function showLoginTab() {
+        document.getElementById("loginPane").style.display = "block";
+        document.getElementById("signupPane").style.display = "none";
+        document.getElementById("tabLoginBtn").classList.add("active");
+        document.getElementById("tabSignupBtn").classList.remove("active");
+    }
+
+    function showSignupTab() {
+        document.getElementById("loginPane").style.display = "none";
+        document.getElementById("signupPane").style.display = "block";
+        document.getElementById("tabLoginBtn").classList.remove("active");
+        document.getElementById("tabSignupBtn").classList.add("active");
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("action") === "signup" || urlParams.get("mode") === "signup") {
+            showSignupTab();
+        }
+    });
+</script>
 
 </body>
 </html>

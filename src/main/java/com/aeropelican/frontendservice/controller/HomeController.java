@@ -19,7 +19,7 @@ public class HomeController {
 
     @GetMapping("/ui/home")
     public String homepage() {
-        return "homepage";
+        return "home";
     }
 
     @GetMapping("/ui/profile")
